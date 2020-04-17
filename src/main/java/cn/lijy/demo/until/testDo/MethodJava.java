@@ -77,8 +77,8 @@ public class MethodJava {
     * @Time: 19:33
     **/
     public static  boolean useStringUntil2(String key){
-        org.apache.commons.lang.StringUtils.isNotBlank(key);// 表示不是null不是空格·
-        org.apache.commons.lang.StringUtils.isNotEmpty(key);// 仅表示不是null,可以是空格
+//        org.apache.commons.lang.StringUtils.isNotBlank(key);// 表示不是null不是空格·
+//        org.apache.commons.lang.StringUtils.isNotEmpty(key);// 仅表示不是null,可以是空格
         int index =1;
         int idex = index == 0 ? 1:2; //三目表达式，如果index == 0 为真 则把1赋给变量，否则把2赋给变量
         return true;

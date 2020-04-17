@@ -5,9 +5,6 @@ import cn.lijy.demo.entity.MybatisPojo;
 import cn.lijy.demo.mapper.MybatisMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
