@@ -1,0 +1,21 @@
+#spring:
+#  jpa:
+#    database: mysql
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/prometheus?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+#    username: root
+#    password: 123
+#  redis:
+#    sentinel:
+#      master: mymaster  # redis连接哨兵模式
+#      nodes:  122.67.93.164:26379,122.67.93.165:26379    #所连接的redis集群
+#    password:   #密码
+#    pool:
+#      max-active:
+#      max-idle:
+#      max-wait:
+#    timeout:  #超时时间
+#
+#

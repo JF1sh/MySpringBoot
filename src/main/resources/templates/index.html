@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<input name="file" id="files" type="file"/>
+<input onclick="submit()" type="button" value="upload"/>
+<div id="pre"></div>
+<div th:each="prod : ${list}">
+    <a style="text-decoration-color: blue"><span th:text="${prod}" onclick="hrefThis(this)"></span></a>
+</div>
+</body>
+<script>
+    function hrefThis(obj) {
+        var v =obj.innerHTML;
+        window.location.href = "http://localhost:8080/fileDown?path="+v;
+    }
+
+    function submit() {
+        var file =document.getElementById("files").files[0];
+        var formData= new FormData;
+        formData.append("file",file);
+        var xhr = new XMLHttpRequest();
+        xhr.open("post","http://localhost:8080/fileUp",true)
+        xhr.addEventListener("progress",function (res) {
+            if(res.lengthComputable){
+                var pre =(res.loaded / res.total  * 100).toFixed(0);
+                console.log(pre);
+                document.getElementById("pre").innerHTML=pre+'%';
+                if(pre == 100){
+                    alert("success");
+                    window.location.reload();
+                }
+            }
+        },false);
+        xhr.send(formData);
+    }
+</script>
+</html>
