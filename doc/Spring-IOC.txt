@@ -1,0 +1,255 @@
+Spring - ioc
+
+IOC 控制反转
+  方式：使用依赖注入（DI）的方式实现 (使用jdk反射包中的poxy类，动态生成对象)
+  
+  目的：低耦合 ，创建并建立对象之间的关系
+        Spring在开启时，通过注入的方式建立对象之间的关系。   
+
+		
+Bean 容器初始化	
+   基础：两个包
+      -- org.SpringFrameWork.beans
+         BeanFactory提供配置结构和基本功能，加载并初始化bean
+
+      -- org.SpringFrameWork.context  (bean容器)
+         ApplicationContext 保存bean对象 并在Spring中使用
+        
+        ApplicationContext初始化方式：
+        
+		1，本地文件
+		
+          FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("F:/workSpace/appcontext.xml");
+
+        2，ClassPath
+            
+		  ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:Spring-context.xml")
+     
+        3, Web应用的中依赖Servlet 和 Listener
+		 <listener>
+		   <listener-class> org.springframework.web.context.ContextLoaderListener </listener-class>
+		 </listener>
+		 
+		 
+		 <servlet>
+				<servlet-name> context</servlet-name>
+				<servlet-class> org.springframework.web.context.ContextLoaderServlet <servlet-class>
+				<load-on-startup>1</load-on-startup>
+		 </servlet>
+
+		
+		
+		
+		
+Spring 注入
+
+      是指在启动Spring IOC容器加载bean配置的时候，完成对变量的赋值行为 （ioc在加载的过程中会 扫描xml文件中的bean的相关配置，为bean进行实例化，初始化）
+	  
+	  常用注入方式：
+	   -- 设置注入  调用属性的set方法进行赋值  
+	     <property>
+	   
+	   -- 构造注入  根据bean的构造方式进行赋值
+	     <constructor-arg> (构造器)
+		  
+		 
+		 
+		 
+Bean 的配置项
+   一，bean 的作用域： singleton  单例：一个bena容器中只存在一份
+                        prototype  每次请求 每次使用都会创建新的实例，destroy不生效
+						
+   
+   二，bean 生命周期：
+        1，定义
+		  在Spring bean的配置文件中，即xml文件中，对bean的定义 。 XML文件中的<bean>标签的配置
+		  
+		2，初始化
+		   在ioc容器启动时，加载并配置xml文件里面的bean，生成bean 的实例
+		   方式:
+		      -- 实现org.springframework.beans.factory.InitializingBean 接口  覆盖 afterPropertiesSet()方法
+			  
+			  -- 配置 init-method 
+			     <bean id="bean" class="com.bean" init-method="init"/>
+				 需要在bean里自己写init方法
+		   
+		   
+		3，使用
+		    通过getBean()方法获得Bean的实例，并使用Bean
+		
+		4，销毁
+		   
+		   方式：
+		      -- 实现org.springframework.beans.factory.DisposableBean 接口  覆盖 destroy() 方法
+			  
+			  
+			  -- 配置destroy-method
+			     <bean id="bean" class="com.bean" destroy-method="cleanup"/>
+				 需要在bean中自己写 cleanup方法
+				 
+				 
+				 
+Bean -Aware 接口
+     Spring中提供了一些以Aware结尾的接口，实现了Aware接口的Bean在被初始化后，可以获取相应资源，通过Aware接口，可以对Spring相应资源进行操作
+	 例如:
+	     -- ApplicationContextAware：Bean类实现该接口，通过覆盖该接口提供的setApplicationContext方法，可以直接获取spring上下文，而不用我们自己手动创建。
+		 
+		 -- BeanNameAware：Bean类实现该接口，通过覆盖该接口提供的setBeanName方法，可以得到bean的name(id)
+		 
+		 
+Bean  -自动装配
+      自动装配：无需在xml中单个<bean>指定property或是constructor-arg属性。在<beans/ default-autowire="">
+
+		byName：根据set中参数的bean id装配bean实例。
+
+		byType：根据set中参数的bean类型装配bean实例。
+
+		constructor：IOC容器查找有无构造器方法中的参数的类型
+		
+		
+Resources : 针对资源文件的的统一接口，通过Spring加载一些资源文件的时候，可以通过他去控制。
+            （通过实现 ApplicationContextAware, 获取ApplicationContext对象获取配置文件）
+			
+			ResourceLoader前缀：classpath：（相对路径，加载文件）
+
+                                     file：（绝对路径，加载文件）
+
+                                     url：  http(web路径、加载文件)
+
+                                  （none）：直接输入路径，依赖ApplicationContext
+								  
+								 
+								 
+	
+基本注解：	
+		Component是一个通用注解，可用于任何bean
+
+		@Repository通常用于注解DAO类，即持久层
+
+		@Service通常用于注解Service类，即服务层
+
+		@Controller通常用于Controller类，即控制层（MVC）	
+
+
+		
+@Autowired - 使用1 :		
+    --@Required：适用于Bean属性的set方法上，bean属性必须在配置时被填充，通过bean定义或自动装配一个明确的属性值。（不常用)
+  
+    --@Autowired:自动注入，一般标识在构造器、set方法、成员变量上。如果找不到注入的实例，则抛出异常，可以通过required=true属性来避免。(如果使用required属性，则使用成员变量时应进行判断是否为空)
+  
+	  注意：        每个类的构造器都可以使用@Autowired注解，但只能有一个构造器被标记为Autowired(required=true),required默认为false，这种情况下（解决多个构造器不能使用required属性）
+	  @Autowired的必要属性，建议使用@Required注解来代替。
+	  
+	  
+@Autowired - 使用2 :
+     使用@Autowried在 list 和map中
+     通过给数组自动装配，可把当前容器中所有该类型的bean添加到数组中
+     如果装配到map中，则key 为bean id ,value 为bean	类型
+      --@order注解可以指定一个参数，参数的意义是该实例在数组中的顺序	
+
+
+@Autowired - 使用3 :
+     --@Resource 适用于成员变量，只有一个参数的set方法
+	 
+     --@Qualifier 使用于构造方法和多参数方法	(参数为bean id)
+        @qualifier：一般和@Autowired一起使用，有时候类型是接口的成员变量可能有多个实现类，按类型自动注入时可能会有多个Bean实例的情况，可以使用@Qualifier注解缩小范围（或指定唯一），指定使用哪个接口的实现类来赋给当前的成员变量，也可用于指定单独的构造器或方法参数。   
+
+
+
+
+
+
+基于java容器的注解：
+
+@Configuration ：表示该类为配置类
+
+@Bean: 
+       由SpringIoc容器配置和初始化对象，类似于XML配置文件的<bean/>,。（一般@Bean 需要在配置类中使用，即类上需要加上@Configuration注解）
+       @bean 中可以传入 name、init-method、destroy-method等参数，
+	   name 指定了 bean 的 id。若没有指定name,则创建的bean id为方法名
+	   初始化和销毁的方法在 调用哪个具体的实现类 中 写。	   
+        
+	   默认模式为单例(singleton)
+	   @Scope :value属性指定Bean的作用域范围，proxyMode属性指定使用的代理方式(包括接口的代理和类的代理)。
+	            代理方式主要有两种：针对接口的代理、针对类的代理，实现方式有所区别。前者是jdk动态代理，后者是cglib代理。
+	   
+@ImportResource("classpath:config.xml") ： 加载相对路径下的资源文件
+
+@Value：对资源文件读取并赋值
+
+
+	   
+	   
+	   
+基于泛型的自动装配：
+    泛型接口 store<T> ,有两个实现类 store<String>  store<Integer>
+	
+						@Autowired
+						private Store<String> s1;
+
+						@Autowired
+						private Store<Integer> s2;
+						
+						@Bean
+						public StringStore stringStore(){
+							return new StringStore();
+						}
+						
+						@Bean
+						public IntegerStore integerStore(){
+							return new IntegerStore();
+						}
+				
+
+				
+				
+@Resource和@Autowired：
+
+    都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是Spring支持该注解的注入。
+	
+	1、共同点
+ 
+    两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。
+	
+	2、不同点
+		@Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合@Qualifier注解一起使用。
+		
+		public class TestServiceImpl {
+               @Autowired
+               @Qualifier("userDao")    
+			   private UserDao userDao; 
+        }
+		@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。
+		
+		public class TestServiceImpl {    // 下面两种@Resource只要使用一种即可
+		
+			@Resource(name="userDao")    
+			private UserDao userDao; // 用于字段上    
+			
+			@Resource(name="userDao")   
+			public void setUserDao(UserDao userDao) { // 用于属性的setter方法上
+				this.userDao = userDao;
+			}
+}
+
+
+
+
+初始化回调和销毁回调：
+
+@PostConstruct
+
+@PreDestroy
+
+
+
+@name 帮助我们标记  在IOC容器中具有相同类型的的类的bean，定位到我们想要的bean的name（也就是那个bean的id）
+
+--@Named注解在类名上等同于@component，在参数上类似于@Qualifier，（使用id进行装配）
+
+@Inject 等效于 @Autowired ，可以使用在类，属性，方法，构造器
+
+	@Inject
+	public void setJsrDAO(@Named("jsrDAO")JsrDAO jsrDAO) {//万一这里是个接口，接口里面同时有两个类注入，所以要指定一个。
+		this.jsrDAO = jsrDAO;
+	}

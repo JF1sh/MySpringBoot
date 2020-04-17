@@ -1,0 +1,63 @@
+--IDEA Spring-boot使用
+
+分层结构：
+ 
+  --Config 包： 所有的配置类 (包括启动类)
+  
+  --Controller: 请求入口
+  
+  --Server: 逻辑层
+  
+  --Mapper：持久层 (使用注解@Repository) 连接数据库。 java的接口层和 写sql的xml层
+  
+  --Domain(Po): 表映射实体。类名相当于一个表名，属性名相当于表字段名
+  
+  --Dto: 数据传输对象 (用于前后端数据交互)
+  
+  
+  
+  
+
+快捷键： 
+  
+   -- Ctrl + Shift + V ： 复制历史 双击记录后 
+   
+   -- Ctrl + Alt  + L : 格式化代码 
+   
+   -- Shift +上/下  ：选择上下两行
+   
+   -- Alt  + Shift +上/下：移动所在行或所选行
+   
+   -- Ctrl + G  : 定位行数
+   
+   -- Ctrl + E ： 查看浏览过的文件列表 
+
+   -- Ctrl + R ： 快速替换
+   
+   -- Ctrl + Shift + F ： 全局搜索
+   
+   -- Ctrl + Shift + N ：按文件名查找文件
+   
+   -- Ctrl + Alt+方向键左 ：跳回跳转前的位置
+   
+   
+   
+DEBUG 调试:
+
+   --step over 调试 F8 当前方法的下一句
+   
+   --setp into 调试 F7 进入当前行调用的方法体里  
+   
+   --step out 自动执行完当前方法
+   
+   
+   
+代码重构Refactor:
+
+   -- Shift + F6：代码变量重命名
+   
+   -- Ctrl+Alt+V：自动生成返回值
+   
+   -- Ctrl+Alt+H 出现的导航栏里可以查看当前方法的调用情况（自己调用和被调用）
+   
+   -- Ctrl + Shift + 右键 ：选中右边第一个单词
