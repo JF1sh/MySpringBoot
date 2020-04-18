@@ -28,6 +28,7 @@ public class SaySome implements ApplicationContextAware {
             System.out.println(context.getBean("mybatisService").getClass().getMethod("findInfo").getName());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
+            System.out.println("获取失败");
         }
         System.out.println(">>>>>"+context.getBean("mybatisService").getClass().getName());
     }

@@ -2,8 +2,8 @@ package cn.lijy.demo.until.xc.synchronize;
 
 /**
  * @program: cn.lijy.demo.until.xc.synchronize
- * @description:   多个实例：两个实例同时访问类中的锁，会并行
- *                 一个实例： 会串行
+ * @description: 多个实例：两个实例同时访问类中的锁，会并行
+ * 一个实例： 会串行
  * @author: JF1sh
  * @create: 2020-04-14 23:04
  **/
