@@ -46,7 +46,7 @@ DEBUG 调试:
 
    --step over 调试 F8 当前方法的下一句
    
-   --setp into 调试 F7 进入当前行调用的方法体里  
+   --step into 调试 F7 进入当前行调用的方法体里
    
    --step out 自动执行完当前方法
    

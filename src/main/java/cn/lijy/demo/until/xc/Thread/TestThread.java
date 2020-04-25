@@ -41,5 +41,10 @@ public class TestThread {
          mt1.start();
          mt2.start();
          mt3.start();
+
+         String ap ="1234567890qwer";
+        System.out.println(ap.substring(0, 10));
     }
+
+
 }

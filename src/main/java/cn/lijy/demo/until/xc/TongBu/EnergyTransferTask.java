@@ -22,7 +22,7 @@ public class EnergyTransferTask implements Runnable{
 			while (true){
 				int toBox = (int) (energySystem.getBoxAmount()* Math.random());
 				double amount = maxAmount * Math.random();
-				energySystem.transfer(fromBox, toBox, amount);
+				energySystem.method(fromBox, toBox, amount);
 				Thread.sleep((int) (DELAY * Math.random()));
 			}
 		}catch (InterruptedException e){

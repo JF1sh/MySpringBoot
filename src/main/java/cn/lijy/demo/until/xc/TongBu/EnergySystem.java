@@ -28,7 +28,7 @@ public class EnergySystem {
 	 * @param to     能量终点
 	 * @param amount 能量值
 	 */
-	public void transfer(int from, int to, double amount){
+	public void method(int from, int to, double amount){
 
 		synchronized(lockObj){
 //			 if (energyBoxes[from] < amount)

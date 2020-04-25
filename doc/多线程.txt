@@ -1,3 +1,40 @@
+实现多线程的方式：
+   通常来说有两种。准确的来说，创建线程只有一种方式那就是构造Thread类，而实现线程的执行单元有两种方式：
+     1：实现Runnable接口的run方法 ，把Runnable实例传给Thread类
+     2: 继承Thread类，重写run方法。
+
+
+两个方法的比较：
+   1：从代码架构的方面：把线程和任务解耦，所以用runnable
+   2: 从新建线程的方面：新建一个任务必须新建一个线程，消耗资源，所以runnable好
+   3: 从语言特性的方法：java不支持多继承， （单继承多实现）
+
+
+start()方法调用过程:
+   1: 首先判断threadStatus是否为0 ，如果不为0则新建的线程被调用了2次start()方法 会抛出IllegalThreadStateException
+   2: 然后加入到ThreadGroup
+   3：调用 native start0() 方法
+
+
+如何停止线程:
+   1)尽可能使用interrupt()来请求线程停止，让停止方自己判断自己在何时停止，安全
+   2)想要停止线程，需要 请求方，停止方，子方法被调用方 多方配置。
+        A)停止方：需要再循环或者适当的时候检查中断状态，并在可能出现InterruptedException异常的时候处理该中断线程；
+        B)请求方：发出中断信息；
+        C)子方法调用方 (被线程调用的方法): 优先在方法层抛出InterruptedException，或者在检查中断状态时再设置中断状态；
+   3)volatile 的boolean 无法处理长时间阻塞的线程。
+
+
+
+interrupt: 中断线程，线程中没有阻塞方法的情况下，会执行成功使线程中断。
+判断线程是否中断的相关方法：
+  static boolean interrupted():  获取当前线程是否被中断，在返回后会清除中断状态
+
+  boolean isInterrupted(): 获取当前线程是否被中断，不清除状态。
+
+  Thread.interrupted()静态方法的目标对象: 它的目标对象为“当前线程” ，而不管是调用的
+
+
 多线程：
 
 -- 进程：是程序的执行过程，是动态的，持有资源（内存，文件）和线程，双击运行一个程序既是一个进程
@@ -12,7 +49,26 @@
  
  
  
- 线程的生命周期：
+--线程的状态：
+
+New : 已创建还没启动的新线程，未调用start()方法
+
+Runnable: 可运行状态创建了线程对象后，调用了线程的start()方法（注意：此时线程只是进入了线程队列，等待获取CPU服务，具备了运行的条件，
+          但并不一定已经开始运行了），只要调用了start()方法 都是在runnable状态。
+
+Blocked：当一个线程在进入 被synchronized修饰的同步代码块，且当前锁(monitor)已经被其他线程拿走时 (仅限synchronized修饰)
+
+Waiting: 当一个线程调用Object.wait() , Thread.join() ,LockSupport.part() 的方法时进入等待状态。
+
+TimedWaiting: 当一个线程调用Thread.sleep(time),Object.wait(time),Thread.join(time),LockSupport.partUntil(time) 的方法时进入等待状态。
+
+Terminated : 已终止状态。(1，正常运行结束 2，出现未捕获的异常)
+
+
+
+
+
+线程的生命周期：
 
 创建：创建一个Thread对象
 
@@ -36,10 +92,10 @@
 	    线程之间的互斥：通过加锁实现：线程访问临界区的代码放在一个代码块中，加锁实现
 	 
    2,多线程之间的同步（线程的等待和唤醒：wait()+notifyAll()）：通信机制；一个线程完成，以某种方式通知其他线程可以访问临界区
-        
+        A
 		线程之间的同步：通过wait（）+notify（）的通信机制来实现
 		
-		线程同步的实现有wait()（会释放所资源和释放锁，然后进入锁对象上的wait set）,notify()（会唤醒所对象的wait set中的一个线程）,notifyall()（会唤醒所对象的wait set中的所有线程）这几个方法来实现,这几个方法都是属于object
+		线程同步的实现有wait()（会释放所资源和释放锁，然后进入锁对象上的wait set）,notify()（会唤醒所对象的wait set中的一个线程）,notifyll()（会唤醒所对象的wait set中的所有线程）这几个方法来实现,这几个方法都是属于object
    
    lockObj.notifyAll()；唤醒所有等待资源的线程。等待池的对象是不会竞争锁的，当notifyAll后，等待池中的线程会被唤醒进入到该线程的锁池中重新竞争对象锁，重新获得锁后的对象会从wait后继续执行代码，其他对象会被阻塞，而不是wait。被阻塞的对象会等待下一次被唤醒（notify、notifyAll）。另外，notify不是线程安全的，notifyAll才是。
    
