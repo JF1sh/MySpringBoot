@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * @program: cn.lijy.demo.until.xc.Thread
  * @description: 使用wait()/notify() 创建生产者消费者模式
  *
- * 原理：生产者生产到指定数量会去调用wait() 并且释放锁。
+ * 原理：生产者生产到指定数量会去调用wait() 并且释放锁。 生产者每生产一个会调用 notify()
  *
  * @author: JF1sh
  * @create: 2020-04-25 23:28
