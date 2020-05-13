@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.javaDesignMode.observer;
+package cn.lijy.demo.until.javaDesignPattern.observerPattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,8 @@ public class Subject {
     /**
      * 只有子类可以调用所以用 protected
      * 用于通知所有注册集合的所有观察者
+     * 此为拉模型。
+     * 如果使用推模型则是 传入指定参数 即为需要通知改变的属性
      */
     protected void notifyObservers(){
         for(Observer ob: observers){

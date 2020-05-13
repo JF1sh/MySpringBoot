@@ -1,4 +1,5 @@
-package cn.lijy.demo.until.javaDesignMode.observer;
+package cn.lijy.demo.until.javaDesignPattern.observerPattern;
+
 
 /**
  * @program: cn.lijy.demo.until.javaDesignMode.observer
