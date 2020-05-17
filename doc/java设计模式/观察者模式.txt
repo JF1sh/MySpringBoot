@@ -30,6 +30,7 @@
 
 
 java实现  目标类： 继承Observable 类
+                  在目标属性改变时 需要先调用 this.setChanged()
           观察者： 实现 Observer 接口
 
 

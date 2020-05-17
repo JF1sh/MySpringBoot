@@ -1,5 +1,11 @@
 package cn.lijy.demo.until.testDo;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 /**
  * @program: cn.lijy.demo.until.testDo
  * @description:
@@ -9,16 +15,4 @@ package cn.lijy.demo.until.testDo;
 public class DoPost {
 
 
-    private  String  callHttpService(String url , String data){
-        String resultData= "";
-//
-//        try {
-//            HttpPost post = new HttpPost();
-//        }catch (){
-//
-//        }
-
-
-        return resultData;
-    }
 }
