@@ -22,7 +22,7 @@ public class WaitNotifyPrintOdevity {
                             System.out.println(Thread.currentThread().getName() + ":" + num);
                             num++;
                             clock.notify();
-                       if(num < 100){
+                       if(num < 101){
                            try {
                                clock.wait();
                            } catch (InterruptedException e) {
@@ -42,7 +42,7 @@ public class WaitNotifyPrintOdevity {
                             System.out.println(Thread.currentThread().getName() + ":" + num);
                             num++;
                             clock.notify();
-                        if(num < 100){
+                        if(num < 101){
                             try {
                                 clock.wait();
                             } catch (InterruptedException e) {

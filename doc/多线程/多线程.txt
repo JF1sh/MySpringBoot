@@ -104,7 +104,7 @@ Terminated : 已终止状态。(1，正常运行结束 2，出现未捕获的异
    
 Thread.currentThread().getName();获取当前线程的名称。
 
-volatile;可见性，java的关键字(保证了线程可以正确的读取其他线程写入的值) 用于停止线程
+volatile;可见性，java的关键字(保证了线程可以正确的读取其他线程写入的值)
 
 Thread.yield();让出当前线程的执行权限，随机选择线程执行。
 
