@@ -17,6 +17,6 @@ public class Singleton1 {
         return instance;
     }
 
-    // 由于被static修饰 所有在类加载的时候就会创建 Singleton1 的实例 (避免了线程同步问题，类加载是jvm虚拟机保证了线程安全)
+    // 由于被static修饰 所以在类加载的时候就会创建 Singleton1 的实例 (避免了线程同步问题，类加载是jvm虚拟机保证了线程安全)
     //构造函数私有化，提供公有方法返回实例
 }
