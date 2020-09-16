@@ -61,3 +61,10 @@ DEBUG 调试:
    -- Ctrl+Alt+H 出现的导航栏里可以查看当前方法的调用情况（自己调用和被调用）
    
    -- Ctrl + Shift + 右键 ：选中右边第一个单词
+
+
+Setting 设置：
+    Live Templates -- 设置快捷键
+
+    command+option+L -- 格式化代码
+
