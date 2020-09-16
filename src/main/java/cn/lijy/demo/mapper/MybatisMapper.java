@@ -16,7 +16,7 @@ public interface MybatisMapper {
      * @Date: 2019/11/7
      * @Time: 9:52
      **/
-     @Select("SELECT  servic_name FROM monitor_obcp_ce WHERE id =12")
+     @Select("SELECT  servic_name FROM monitor_ce WHERE id =12")
      String findservName();
 
 
