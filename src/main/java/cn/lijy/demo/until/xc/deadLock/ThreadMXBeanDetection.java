@@ -41,7 +41,7 @@ public class ThreadMXBeanDetection implements Runnable {
                 System.out.println(threadInfo.getLockName());
                 System.out.println(threadInfo.getThreadName());
                 System.out.println("");
-                //得到锁住线程的信息 进行处理
+                 t1.interrupt();
             }
         }
     }
