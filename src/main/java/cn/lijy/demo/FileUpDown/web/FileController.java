@@ -33,7 +33,7 @@ public class FileController {
     @Autowired
     Environment environment;
 
-    final String uri="E://test01//";
+    final String uri="/Users/jf1sh/temp/Downlaod-test";
 
     @RequestMapping("fileUp")
     @ResponseBody

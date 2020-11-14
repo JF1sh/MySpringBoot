@@ -12,7 +12,8 @@ public class ioDo {
 
     private static void getAvailable() {
 
-        File file = new File("E://test01//Demo-ERROR.log");
+ //     File file = new File("E://test01//Demo-ERROR.log");
+        File file = new File("//Users//jf1sh//java//Word_File//Project-demo//jQuery//Ajax.html");
         try {
             InputStream inputStream = new FileInputStream(file);
             /*available()获取读的文件所有的字节个数*/

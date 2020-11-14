@@ -21,6 +21,11 @@ public class MybatisContro  {
     @Autowired
     private MySqlBatch2 mySqlBatch2;
 
+    @RequestMapping("/index")
+    public String index(){
+        return "index1";
+    }
+
     @RequestMapping(value = "/findByid",method = RequestMethod.POST)
     @ResponseBody
     public String findServName(){
@@ -61,6 +66,13 @@ public class MybatisContro  {
 
         mySqlBatch2.addBacth(list);
         return "ok";
+    }
+
+    @RequestMapping(value = "/addUser")
+    @ResponseBody
+    public String addUSer(int num){
+        System.out.println(mybatisService.addUser(num));
+        return "add success";
     }
 
 }

@@ -1,11 +1,7 @@
 package cn.lijy.demo.until.socket;
 
 
-import cn.lijy.demo.entity.MybatisPojo;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 
 import java.util.List;
 
@@ -75,7 +71,8 @@ public class CreateXML {
             Document document =DocumentHelper.parseText(str);
 
             /*以pojo标签为例，提取节点，放在一个集合中*/
-            List <MybatisPojo> list = document.selectNodes("xml/pojo");
+         //   List <MybatisPojo> list = document.selectNodes("xml/pojo");
+            List<Node> list = document.selectNodes("xml/pojo");
 
             /*遍历集合，得到xml文件，将对象转换为element*/
             Element element=(Element)list.get(1); //1为集合的下标

@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * @program: cn.lijy.demo.until.testDo
- * @description:
+ * @description: 取随机数
  * @author: JF1sh
  * @create: 2019-12-04 09:23
  **/

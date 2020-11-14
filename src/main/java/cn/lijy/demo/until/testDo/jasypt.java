@@ -89,7 +89,7 @@ public class jasypt {
     public static void main(String[] args) {
 
         // 加密
-        System.out.println(encryptPwd("panther", "123"));
+        System.out.println(encryptPwd("panther", "267736yu"));
         System.out.println(decyptPwd("panther", "EuMwggvuovI44kw9fhL7bw=="));
         // System.out.println(encryptPwd("panther", "123"));
         //解密

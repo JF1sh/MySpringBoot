@@ -122,15 +122,13 @@ public class UDPSocketMgr {
     }
 
 
-//
-//    public static void main(String[] args) throws UnsupportedEncodingException {
-//        String str ="ljhgsahdjkashdjak";
-//        byte[] bu =str.getBytes(); //将字符串转换为字节序列
-//        System.out.println(bu);
-//        String info = new String (bu,0,bu.length); //将字节序列转换为字符串
-//        System.out.println(info);
-//    }
-
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        String str = "ljhgsahdjkashdjak";
+        byte[] bu = str.getBytes(); //将字符串转换为字节序列
+        System.out.println(bu);
+        String info = new String(bu, 0, bu.length); //将字节序列转换为字符串
+        System.out.println(info);
+    }
 
 
 }
