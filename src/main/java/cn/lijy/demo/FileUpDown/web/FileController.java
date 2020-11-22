@@ -26,6 +26,7 @@ import java.util.Map;
  **/
 
 @Controller
+@RequestMapping("file1")
 public class FileController {
 
    private static Logger log = Logger.getLogger(FileController.class);
@@ -33,7 +34,7 @@ public class FileController {
     @Autowired
     Environment environment;
 
-    final String uri="/Users/jf1sh/temp/Downlaod-test";
+    final String uri="/Users/jf1sh/temp/Downlaod-test/";
 
     @RequestMapping("fileUp")
     @ResponseBody
@@ -41,11 +42,11 @@ public class FileController {
         if (file.isEmpty()){
             return "上传失败";
         }
-        String originalFilename = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();//获取上传文件但文件名
         String filePath =uri;
-        File file1 =new File(filePath + originalFilename);
+        File file1 =new File(filePath + originalFilename);//设置文件路径
         try {
-            file.transferTo(file1);
+            file.transferTo(file1);//将file保存到file1 但只能调用一次。
             return "上传成功";
         }catch (Exception e){
             e.printStackTrace();
@@ -68,10 +69,10 @@ public class FileController {
 
             response.reset();
 
-            response.addHeader("Content-Disposition","attachment;filename="+new String(fileName.getBytes()));
-            response.addHeader("Content-Length",""+file.length());
+            response.addHeader("Content-Disposition","attachment;filename="+new String(fileName.getBytes()));//设置相应文件为附件
+            response.addHeader("Content-Length",""+file.length()); //设置相应头中的实体大小
             BufferedOutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-            response.setContentType("application/octet-stream");
+                response.setContentType("application/octet-stream");//设置相应方式
             toClient.write(buffer);
             toClient.flush();
             toClient.close();

@@ -26,6 +26,8 @@ public class MybatisContro  {
         return "index1";
     }
 
+
+
     @RequestMapping(value = "/findByid",method = RequestMethod.POST)
     @ResponseBody
     public String findServName(){
