@@ -62,7 +62,7 @@ public class FileController2 {
             try (
                     FileInputStream fis = new FileInputStream(file);
                     BufferedInputStream bis = new BufferedInputStream(fis);
-            ) {
+            ) { //在try块退出时，会默认调用close()方法
                 os = response.getOutputStream();
                 int i = bis.read(buffer);
                 while (i != -1) {

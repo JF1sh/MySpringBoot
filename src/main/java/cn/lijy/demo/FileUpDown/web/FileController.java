@@ -64,7 +64,7 @@ public class FileController {
             BufferedInputStream fis = new BufferedInputStream(new FileInputStream(path));
             /* 获取文件大小*/
             byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
+            fis.read(buffer); //把文件流放入buffer
             fis.close();
 
             response.reset();

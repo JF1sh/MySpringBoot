@@ -1,0 +1,14 @@
+上传原理：
+      form表单中定义 Method ="post"  //请求方式
+                   encType="Multipart/form-data" //以二进制编码提交
+
+
+下载原理：
+      1：设置response响应头，服务器以哪种方式来响应请求
+         一般设置为: HttpServletResponse.setContentType("application/octet-stream");
+
+      2: 设置返回头信息中的 "Content-Disposition" 为附件，以文件名下载
+          HttpServletResponse.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "utf8"))
+
+      3：读取文件
+         将读取到的文件流，写入HttpServletResponse的OutPutStream中返回给前端
