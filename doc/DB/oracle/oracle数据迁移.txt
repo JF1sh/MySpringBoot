@@ -1,0 +1,56 @@
+sqlplus / as sysdba  //进入oracle环境
+
+## 1. 创建 directory 目录
+
+SQL>  create or replace directory dmp as '/opt/oracle/dmp';    //创建逻辑目录，dmp文件存放地址，oracle不会帮你建/opt/oracle/dmp
+
+Directory created.
+
+SQL> grant read,write on directory dmp to bto;  //bto 对应的用户1
+
+Grant succeeded.
+SQL> grant read,write on directory dmp to bto_c2;  //bto_c2 对应的用户2
+
+Grant succeeded.
+SQL> exit;
+
+## 2
+
+select * from dba_directories;  //查看dmp 对应的 路径是否创建成功
+
+
+
+## 3. 数据导出
+
+[oracle@hadoop1 ~]$ expdp bto/oss@orcl schemas=bto directory=dmp  dumpfile=bj_bto.dmp logfile=bto_dmp.log    //全量备份bto用户
+[oracle@hadoop1 ~]$ expdp bto_c2/oss@orcl schemas=bto_c2 directory=dmp  dumpfile=bj_bto_c2.dmp logfile=bto_c2_dmp.log    //全量备份bto_c2用户
+[oracle@hadoop1 ~]$ expdp bto_c3/oss@orcl schemas=bto_c3 directory=dmp  dumpfile=bj_bto_c3.dmp logfile=bto_c3_dmp.log    //全量备份bto_c2用户
+
+
+
+上述： 
+
+bto/oss @orcl :  用户名/密码@服务器ip/实例  rhsg/rhsg@122.18.109.26/ora11 
+
+Schemas: 为需要做迁移的用户，多用户以英文逗号进行分割
+
+directory： 源服务器上存放导出文件以及日志的临时路径
+
+dumpfile：导出文件的名称
+
+logfile： 导出的日志名称
+
+## 4. 文件导入
+
+impdp bto/oss@orcl DIRECTORY=dmp  DUMPFILE=bj_bto.dmp logfile=bto_impdb.log;  //bto数据库需要创建
+impdp bto_c2/oss@orcl DIRECTORY=dmp  DUMPFILE=bj_bto_c2.dmp logfile=bto_c2_impdb.log;  //bto_c2数据库需要创建
+impdp bto_c3/oss@orcl DIRECTORY=dmp  DUMPFILE=bj_bto_c3.dmp logfile=bto_c3_impdb.log;  //bto_c3数据库需要创建
+
+上述：
+
+DIRECTORY： 导入的dmp的地址
+
+DUMPFILE： 导入的dmp包
+
+如果需要将数据导入到其他用户加上`REMAP_SCHEMA=source_schema:target_schema`即可。
+

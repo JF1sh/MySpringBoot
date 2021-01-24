@@ -24,9 +24,9 @@ public class ConcreteDiffSubject extends DiffSubject {
     @Override
     protected void notifyObservers() {
         for (DiffObserver dob : observers) {
-            if (dob.getObserverName().equals("li-1")) {
+            //if (dob.getObserverName().equals("li-1")) {
                 dob.update(this);
-            }
+           // }
         }
     }
 }

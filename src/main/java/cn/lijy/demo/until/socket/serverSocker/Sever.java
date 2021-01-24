@@ -23,7 +23,7 @@ public class Sever {
                 Socket socket = serverSocket.accept(); //链接创建后会创建一个socket用来和客户端通信
 
                 System.out.println("客户端[" + socket.getPort() + "]已连接");
-                //获取客户端的信息
+                //获取客户端的信息 使用字符流 可以转换为可读字符流。
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 //返回客户端的信息
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));

@@ -20,6 +20,7 @@ public class Test {
         subject.addObserver(observer1);
         subject.addObserver(observer2);
 
+
         subject.setSubjectState("gun");
 
     }

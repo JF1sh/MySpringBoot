@@ -8,11 +8,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 使用BIO模型实现多人聊天，acceptor用于接收客户端请求，为其分配handler
  * 服务端*
  * 使用accept()监听是否有客户端进行连接，并为其分配一个Handler(用于客户端真正与服务器进行通信)
+ *
+ *
+ * BIO：阻塞式io
+ * 阻塞：1：ServerSocket.accept()本身就是阻塞。
+ *      2：InputStream.read() OutputStream.write() 输入输出流的读和写都是阻塞式的，在服务端和客户端连接后，如果客户端一直不发送消息会，
+ *        会陷入阻塞状态，造成流资源的浪费。
+ *      3：无法在同一个线程里处理多个I/O 。因读和写是阻塞式的，所以无法在一个线程中处理多个客户端的通信，那样会到导致一个客户端不发消息阻塞里所有的线程，
+ *      所以使用多个线程进行处理。
+ *
+ * 服务端的acceptor来监听是否有客户端进行连接，每有一个客户端连接为其创建一个handler(线程)，可以通过线程池进行优化
  */
 public class ChatServer {
 
@@ -22,7 +34,10 @@ public class ChatServer {
 
     private Map<Integer, Writer> connectedClients;// key:连接的客户端端口  value：向对应客户端发送的信息
 
+    private ExecutorService executorService; //线程池
+
     public ChatServer() {
+        executorService =  Executors.newFixedThreadPool(10);//有固定的线程数量，若不够用则会等待直到资源释放
         connectedClients = new HashMap<>();//初始化
     }
 
@@ -87,7 +102,8 @@ public class ChatServer {
             while (true) {
                 Socket accept = serverSocket.accept();// 监听端口是否有客户端连接,返回建立连接的socket
                 //创建handler线程
-                new Thread(new ChatHandler(this, accept)).start();
+                //new Thread(new ChatHandler(this, accept)).start();
+                executorService.execute(new ChatHandler(this,accept));
             }
         } catch (IOException e) {
             e.printStackTrace();

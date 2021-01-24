@@ -1,0 +1,24 @@
+create table tb_member(
+
+总表字段都分表字段一样;
+
+)ENGINE=MERGE '更换引擎 merge'
+UNION=(tb_member1,tb_member2)  '合并所有分表'
+INSERT_METHOD=LAST  '表示为该表插入数据，则数据是插入最后一张表中'
+CHARSET=utf8
+AUTO_INCREMENT=1 ;
+
+
+1. 此表类似于SQL中的union机制。
+2. 此表结构必须与基本表完全一致，包括列名、顺序。UNION表必须同属一个DATABASE。
+3. 基本表类型必须是MyISAM。
+4. 可以通过修改.mrg文件来修改MERGE表，每个基本表的名字占一行。注意：修改后要通过FLUSH TABLES刷新表缓存。
+5. 对基本表的更改可以直接反映在此表上。
+6. INSERT_METHOD的取值可以是： 0 不允许插入 FIRST 插入到UNION中的第一个表 LAST 插入到UNION中的最后一个表。(4.0之后可用)
+7. 定义在它上面的约束没有任何作用，约束是由基本表控制的，例如两个基本表中存在着同样的一个Key值，那么在MERGE表中会有两个一样的Key值。
+
+
+
+-----------------decode---------- 
+给字段赋值
+select decode(user.sex,1,'男',2,'女') from user;
