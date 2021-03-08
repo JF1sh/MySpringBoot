@@ -2,6 +2,11 @@ package cn.lijy.demo.until.socket.NIO.channel.fileCopy;
 
 import java.io.*;
 
+/**
+ * 缓冲区的引用 会提升io性能
+ *
+ * 当文件较大时，nio的copy方式性能会优于stream
+ */
 public class BufferSteamCopy implements FileCopyRunner{
 
     @Override

@@ -1,0 +1,40 @@
+ --查询指定文件 find
+
+ find -name ""  --递归查询当前路径下的所有子目录
+
+ find / -name "" --无视路径全局搜索
+
+ find ~ -name "target*" --全局模糊匹配target
+
+ find ~ -iname "target*" --全局模糊匹配target忽略大小写
+
+
+--根据文件内容进行检索 grep
+
+ grep "Result" sg*  --表示在sg打头的文件中搜索"Result"
+
+
+-- | 管道输出符 可以将指令连接起来，前一个指令的输出作为后一个指令的输出
+
+    grep 'Result' sg.log | grep 'INFO' 在sg.log中先找到包含'Result'的行 再从中筛选出含有'INFO'的行
+
+
+-- 对文件内容进行统计  awk
+
+   awk '{$1,$2}' sg.log --筛选出sg中第一列和第二列的数据  （默认的分割符合为空格）
+
+
+
+--批量替换文件内容  sed （擅长使用正则表达式）
+
+  sed 's/^Str/String/' sg.log --将 sg.log中 以Str开头的替换为 String  此操作只是将改变后的内容输出在终端 s表示对字符串进行操作
+
+  sed -i  's/^Str/String/' sg.log --将 sg.log中 以Str开头的替换为 String 只替换一行中首次匹配到的字符 -i 表示对文件进行操作
+
+  sed -i  's/^Str/String/g' sg.log --将 sg.log中 以Str开头的替换为 String 全文替换
+
+  sed -i  '/^ *$/d' sg.log --表示删除sg中的空行 d表示删除
+
+  sed -i  '/str/d' sg.log --表示删除sg中的包含str的行
+
+

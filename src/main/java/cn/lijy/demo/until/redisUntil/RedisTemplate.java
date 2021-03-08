@@ -24,6 +24,7 @@ public class RedisTemplate {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+
     /**
      * 连接redis集群调用类
      */

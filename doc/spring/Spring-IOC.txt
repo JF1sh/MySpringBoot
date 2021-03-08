@@ -1,6 +1,8 @@
 Spring - ioc
 
-IOC 控制反转
+IOC 控制反转 (上层控制下层)
+  含义：把底层类作为参数传递给上层，实现上层对下层对控制。
+
   方式：使用依赖注入（DI）的方式实现 (使用jdk反射包中的poxy类，动态生成对象)
   
   目的：低耦合 ，创建并建立对象之间的关系
@@ -10,7 +12,7 @@ IOC 控制反转
 Bean 容器初始化	
    基础：两个包
       -- org.SpringFrameWork.beans
-         BeanFactory提供配置结构和基本功能，加载并初始化bean
+         BeanFactory提供IOC配置配置机制，加载并初始化bean，建立bean之间的依赖关系
 
       -- org.SpringFrameWork.context  (bean容器)
          ApplicationContext 保存bean对象 并在Spring中使用
@@ -56,9 +58,13 @@ Spring 注入
 		 
 		 
 Bean 的配置项
-   一，bean 的作用域： singleton  单例：一个bena容器中只存在一份
-                        prototype  每次请求 每次使用都会创建新的实例，destroy不生效
-						
+   一，bean 的作用域： singleton  单例：一个bean容器中只存在一份
+                    prototype  每次请求 每次使用都会创建新的实例
+              如果是web容器会支持： (支持以下三种)
+                    request   会为每个http请求创建一个Bean实例
+                    session   会为每个session创建一个bean实例
+                    globalSession  会为每个全局HttpSession 创建一个bean实例，该作用域仅对Portlet有效
+
    
    二，bean 生命周期：
         1，定义
@@ -76,6 +82,13 @@ Bean 的配置项
 		   
 		3，使用
 		    通过getBean()方法获得Bean的实例，并使用Bean
+		    实现：最终调用的是AbstractBeanFactory.doGetBean();
+		     逻辑：1，转换beanName (获取到beanName)
+		          2，从缓存中加载实例
+		          3，实例化bean
+		          4，检测parentBeanFactory
+		          5，初始化依赖bean
+		          6，创建bean
 		
 		4，销毁
 		   
@@ -148,7 +161,7 @@ Resources : 针对资源文件的的统一接口，通过Spring加载一些资�
       --@order注解可以指定一个参数，参数的意义是该实例在数组中的顺序	
 
 
-@Autowired - 使用3 :
+@Autowired - 使用3 :·
      --@Resource 适用于成员变量，只有一个参数的set方法
 	 
      --@Qualifier 使用于构造方法和多参数方法	(参数为bean id)

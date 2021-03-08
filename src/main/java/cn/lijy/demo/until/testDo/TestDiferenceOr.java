@@ -112,5 +112,8 @@ public class TestDiferenceOr {
         System.out.println(-1L ^ (-1L << 3L));
         System.out.println(-1L ^ (-1L << 10L));
         System.out.println(-1L ^ (-1L << 10L));
+
+        System.out.println(12 ^ 7);
+        System.out.println(3L);
     }
 }

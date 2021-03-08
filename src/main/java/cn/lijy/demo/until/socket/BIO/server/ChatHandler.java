@@ -14,6 +14,11 @@ public class ChatHandler  implements Runnable{
     private ChatServer chatServer; //服务器
     private Socket socket; //与哪个客户端进行连接
 
+    /**
+     *  客户端构造函数
+     * @param chatServer 客户端实例
+     * @param socket 建立连接客户端socket
+     */
     public ChatHandler(ChatServer chatServer, Socket socket) {
         this.chatServer = chatServer;
         this.socket = socket;
