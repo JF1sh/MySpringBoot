@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.socket.BIO.server;
+package cn.lijy.demo.until.io.socket.BIO.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

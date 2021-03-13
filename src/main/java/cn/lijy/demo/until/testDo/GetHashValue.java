@@ -10,14 +10,14 @@ public class GetHashValue {
 
 
     public static int getHashValue(String key){
-        int h= (h= key.hashCode()) ^ (h>>16);
+        int h= (h= key.hashCode()) ^ (h>>>16);
         System.out.println(">>>>>>>>>>"+h);
         int i= (100 -1) & h;
         return i;
     }
 
     public static void main(String[] args) {
-        System.out.println(getHashValue(""));
+        System.out.println(getHashValue("567"));
 
     }
 

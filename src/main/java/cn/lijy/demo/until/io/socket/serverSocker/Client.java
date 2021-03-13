@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.socket.serverSocker;
+package cn.lijy.demo.until.io.socket.serverSocker;
 
 import java.io.*;
 import java.net.Socket;

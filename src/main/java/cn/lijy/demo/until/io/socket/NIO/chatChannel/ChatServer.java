@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.socket.NIO.chatChannel;
+package cn.lijy.demo.until.io.socket.NIO.chatChannel;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.socket.BIO.client;
+package cn.lijy.demo.until.io.socket.BIO.client;
 
 import java.io.*;
 import java.net.Socket;

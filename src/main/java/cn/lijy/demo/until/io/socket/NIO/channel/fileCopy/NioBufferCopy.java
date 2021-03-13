@@ -1,4 +1,4 @@
-package cn.lijy.demo.until.socket.NIO.channel.fileCopy;
+package cn.lijy.demo.until.io.socket.NIO.channel.fileCopy;
 
 import java.io.*;
 import java.nio.ByteBuffer;

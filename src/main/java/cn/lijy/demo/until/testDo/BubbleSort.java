@@ -19,6 +19,7 @@ public class BubbleSort {
                      temp =num[i] ;
                      num[i] =num[j];
                      num[j]=temp;
+                    System.out.println("当前："+Arrays.toString(num));
                 }
             }
         }

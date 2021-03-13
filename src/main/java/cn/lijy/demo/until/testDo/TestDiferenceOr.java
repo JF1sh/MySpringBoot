@@ -91,7 +91,7 @@ public class TestDiferenceOr {
      *
      * 运算方式 >>: 将二进制吗向右移动
      * 运算方式 <<: 向左移动
-     * 运算方式 >>>:
+     * 运算方式 >>>:逻辑右移，当num为正数和>>右移一个效果
      *
      * */
     public static void test4(){
