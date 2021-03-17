@@ -1,0 +1,18 @@
+ kafka 是面向数据流的生产，转换，存储，消费 的流处理平台。
+
+
+ Producer:消息与数据的生产者，向kafka的一个Topic发布消息的进程/代码/服务
+
+ Consumer:消息与数据的消费者，通过订阅数据(Topic)并且处理其发布的进程/代码/服务
+
+  --Consumer Group: 对于同一个Topic，会广播给不同的Group，一个Group中只有一个Consumer可以消费该消息
+
+
+ Broker：物理概念，指的是kafka集群中不同的kafka节点
+
+ Topic：逻辑概念，kafka消息类别，对数据进行区分，隔离
+ Partition:物理概念，kafka下存储数据的基本单元，一个Topic数据，会被分散存储在多个partition，每个Partition是有序的。
+ Replication:（副本）同一个Partition可能有多个Replication，多个Replication的数据是一样的。
+ Replication Leader:负责该partition与Producer和Consumer交互，一个partition只有一个Leader。(只有这个可以交互)
+ ReplicationManager:负责管理broker所有的分片和副本的信息，处理kafkaController发起的一些请求，副本状态的切换，读取和添加
+

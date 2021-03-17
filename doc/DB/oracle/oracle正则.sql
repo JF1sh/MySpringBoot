@@ -106,4 +106,4 @@ SELECT * FROM monitor_obcp_ce  WHERE servic_name REGEXP '^d[[:alpha:]]{3}41$' ;
 --oracle 的LISTAGG() WITHIN GROUP () 使用
 -- 此函数表示把一列的值合并为一个值，用指定的分隔符隔开，并排序
 -- 以下表示把所有上级机构相等的机构名拼成一列。以code_path排序，以dept_pcode分组
-select dept_pcode,listagg (dept_name,',') within group(order by code_path desc) as name from sy_org_dept  order by dept_pcode
+select dept_pcode,listagg (dept_name,',') within group(mqOrder by code_path desc) as name from sy_org_dept  mqOrder by dept_pcode

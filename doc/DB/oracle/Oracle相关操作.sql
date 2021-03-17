@@ -26,12 +26,12 @@ select substr(a.code_path,12,10) from sy_org_dept a
 
 --在多条重复数据中取时间最新的那条
 -- partition by 后加以哪个重复的字段
--- order by  后加时间字段 会根据最新的时间 显示1，2，3
-select t.SG_ID,row_number() over (partition by t.SG_ID order by t.s_mtime) as row_flg from SY_BASE_BANK 
+-- mqOrder by  后加时间字段 会根据最新的时间 显示1，2，3
+select t.SG_ID,row_number() over (partition by t.SG_ID mqOrder by t.s_mtime) as row_flg from SY_BASE_BANK
 
 --row_number() 记录查询的数据生成一个序号
 --over() 选择哪一列数据进行排序，与row_number()一起用
---partition by 与 order by 一起用，表示以什么分片 以什么排序(显示所有数据)
+--partition by 与 mqOrder by 一起用，表示以什么分片 以什么排序(显示所有数据)
 --group by 将查询的数据根据字段分组后 取一条。
 
 

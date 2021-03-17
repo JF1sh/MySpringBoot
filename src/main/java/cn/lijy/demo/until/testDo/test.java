@@ -55,7 +55,7 @@ public class test {
 
     @Test
     public void say(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         System.out.println(sdf.format(date));
 
