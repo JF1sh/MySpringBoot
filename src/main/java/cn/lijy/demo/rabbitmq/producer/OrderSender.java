@@ -39,6 +39,7 @@ public class OrderSender {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date();
                 mqMessage.setUpdateTime(sdf.format(date));
+                mqMessage.setStates("1");
                 mqOrderMapper.updateMessageStates(mqMessage);
                 System.out.println("ack 确认完毕---------");
             }else {
@@ -69,16 +70,21 @@ public class OrderSender {
         message.setUpdateTime(sdf.format(date));
         //消息数据入库
         mqOrderMapper.addMessage(message);
+        //消息发送
+        sendData(mqOrder);
 
+        return id;
+    }
+
+    public  void sendData(MqOrder mqOrder){
         //回调确认
         rabbitTemplate.setConfirmCallback(callback);
-
         //消息发送
         CorrelationData data = new CorrelationData();
+        //消息唯一Id
         data.setId(mqOrder.getId());
         // 交换机名称， 路由key，消息对象，消息唯一id
         rabbitTemplate.convertAndSend("order-exchange","order.abc", mqOrder,data);
-        return id;
     }
 
 
