@@ -26,6 +26,7 @@ spring:
        max-concurrency: 10 #最大并发量
        prefetch: 1 #限流 同一时间只能有一条消息被消费端消费
 
+
 #  mvc:
 #    view:
 #      prefix: /WEB-INf/jsp/
@@ -51,3 +52,13 @@ jasypt:
     password: panther
 server:
   port: 8081
+
+#激活所有的actuator断点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics,health
+  endpoint:
+    health:
+      show-details: always

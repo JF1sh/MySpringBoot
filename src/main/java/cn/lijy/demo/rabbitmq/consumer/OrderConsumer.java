@@ -3,7 +3,6 @@ package cn.lijy.demo.rabbitmq.consumer;
 import cn.lijy.demo.rabbitmq.entity.MqOrder;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,12 +14,12 @@ import java.util.Map;
 @Component
 public class OrderConsumer {
 
-    @RabbitListener(bindings = @QueueBinding(
-                value = @Queue(value = "order-queue",durable = "true"),
-                exchange = @Exchange(name = "order-exchange",durable = "true",type = "topic"),
-                key = "order.#")
-                 ) // 可以自动实现Exchange与Queue的绑定，用于表示消费者绑定于哪个队列和交换机
-    @RabbitHandler//使用注解的方式监听
+//    @RabbitListener(bindings = @QueueBinding(
+//                value = @Queue(value = "order-queue",durable = "true"),
+//                exchange = @Exchange(name = "order-exchange",durable = "true",type = "topic"),
+//                key = "order.#")
+//                 ) // 可以自动实现Exchange与Queue的绑定，用于表示消费者绑定于哪个队列和交换机
+//    @RabbitHandler//使用注解的方式监听
     //配置文件中设置的为手动签收，手动签收必须依赖于channel
     public void onOrderMessage(@Payload MqOrder mqOrder, Channel channel, @Headers Map<String,Object> headers) throws Exception{
 

@@ -2,7 +2,10 @@ package cn.lijy.demo.aop;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +27,9 @@ public class RequestLogAspect {
         //接收请求 记录请求内容
         ServletRequestAttributes attributes =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
+
+        Object[] args = joinPoint.getArgs();
+        System.out.println(args.toString());
 
         //记录日志内容
         log.info("URL:" + request.getRequestURL().toString());

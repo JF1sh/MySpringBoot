@@ -1,0 +1,107 @@
+Executors 创建线程池：（提供创建线程池的创建方法）
+
+  1， newFixedThreadPool(int Threads)
+    指定工作线程数量的线程池。
+
+  2， newCachedThreadPool()
+    处理大量短时间工作任务的线程池。
+    1> 试图缓存线程并重用，当无缓冲线程可用时，就会创建新的工作线程;
+    2> 如果线程闲置时间超过阀值，则会被终止并移出缓存;
+    3> 系统长时间闲置的时候，不会消耗资源。
+
+  3， newSingleThreadExecutor()
+     创建唯一的工作者线程来执行任务，如果线程异常结束，会有另一个线程取代它
+
+
+  4， newSingleThreadScheduleExecutor() 与 newSingleTreadSchedulePool(int corePoolSize)
+     定时或者周期性的工作调度，两者的区别在于单一工作线程还是多个线程
+
+  5， newWorkStealingPool()
+     内部会构建ForkJoinPool,利用working-stealing 算法，并行的处理任务，不保证处理顺序
+       working-stealing算法：某个线程从其他列队里窃取任务来执行。
+
+     Fork/join 框架：
+      把大任务分割成若干个小任务并行执行，最终汇总每个小任务结果后得到大任务结果的框架。
+
+
+J·U·C的三个Executor接口：(线程池的类型)
+
+    Executor：运行新的任务的简单接口，将任务提交和任务执行细节解耦
+
+
+    ExecutorService：具备管理执行器和任务生命周期的方法，提交任务机制更完善
+
+
+    ScheduleExecutorService：支持Future 和定期执行任务
+
+
+创建线程池的基本方法，以上五种线程池的创建都实现此方法。
+ThreadPoolExecutor:（线程池的构建与实现）
+   实现思路：应用逻辑会将任务 提交(submit()/execute)给 任务队列(WorkQueue),队列收到后会排队将任务交给线程池(工作线程的集合)。如果队列没有空闲的线程处理任务，
+           会启动饱和策略。(饱和策略也可通过实现RejectedExecutionHandler接口自己定义)
+
+ ThreadPoolExecutor()构造函数参数：
+   1>corePoolSize: 核心线程数<长期驻留的线程数>
+   2>maximumPoolSize: 当线程不够时，线程池可以创建的最多线程数
+   3>keepAliveTime: 允许线程存活的最大时间，超过这个时间大于corePoolSize的线程就会被销毁
+   4>workQueue: 任务队列<不同的队列排队机制不同>，任务提交时，线程池中的线程数大于或等于corePoolSize时，会将新任务封装成一个work放入队列中等待
+   5>threadFactory 创建新线程，默认调用 Executors.defaultThreadFactory(),新创建的线程有相同的优先级。
+   6>handler: 线程池的饱和策略。如果线程池满类，且没有空闲线程时
+              1，AbortPolicy : 直接抛异常，默认
+              2，CallerRunsPolicy: 使用调用者的线程来执行任务
+              3，DiscardOldestPolicy: 丢弃队列里最靠前的任务，先执行此任务
+              4，DiscardPolicy: 直接抛弃任务
+
+
+  *新任务提交execute执行后的判断：
+    如果运行的线程少于corePoolSize，则创建新线程来处理任务，即使线程池中的其他线程是空闲的；
+    如果线程池中的线程数大于等于corePoolSize且小于maximumPollSize，则只有当WorkQueue满时才创建新线程去处理任务；
+    如果设置的corePoolSize和maximumPoolSize相同，则创建的线程池的大小是固定的，这时如果有新任务提交，若workQueue未满，则将请求放入workQueue中，等待空闲去处理；
+    如果运用的线程数量大于等于maximumPoolSize，这时如果workQueue已经满了，则通过handler所指定的策略来处理任务；
+
+
+
+ 线程池的状态：
+    running：能接受新提交的任务，并且也能处理阻塞队列的任务
+
+    shutdown：不再接收新提交的任务，但能处理存量任务。
+
+    stop： 不再接收新提交的任务，也不处理存量任务。
+
+    tidying：所有的任务都已终止
+
+    terminated：terminated（）；方法执行完进入该状态
+
+
+  线程池的大小如何选定：
+    CPU密集型： (主要是计算的) 线程数=cpu核数或者+1
+    I/O密集型： (处理较多的等待任务)线程数=cpu核数*(1+平均等待时间/平均工作时间)
+
+工作队列排队机制：
+
+1）直接提交（如SynchronousQueue）
+
+直接提交策略表示线程池不对任务进行缓存。新进任务直接提交给线程池，当线程池中没有空闲线程时，创建一个新的线程处理此任务。这种策略需要线程池具有无限增长的可能性。
+
+Executors.newCachedThreadPool()使用SynchronousQueue创建线程池。
+
+（2）无界队列（如不具有预定义容量的LinkedBlockingQueue）
+
+LinkedBlockingQueue将导致当所有 corePoolSize 线程都忙时新任务在队列中等待。这样，创建的线程就不会超过 corePoolSize。（因此，maximumPoolSize 的值也就无效了。）
+当每个任务完全独立于其他任务，即任务执行互不影响时，适合于使用无界队列。
+
+Executors.newFixedThreadPool(3)使用LinkedBlockingQueue创建线程池。
+
+Executors.newSingleThreadExecutor()使用LinkedBlockingQueue创建线程池。
+
+（3）有界队列（如ArrayBlockingQueue）
+
+有界队列（如ArrayBlockingQueue）有助于防止资源耗尽当最大线程数有限时，但是可能较难调整和控制。队列大小和最大池大小可能需要相互折衷。
+
+（4）优先级队列（如PriorityBlockingQueue）
+
+（5）DelayedWorkQueue
+
+DelayedWorkQueue是ScheduledThreadPoolExecutor的静态内部类。
+
+Executors.newScheduledThreadPool(3)使用DelayedWorkQueue创建线程池。
